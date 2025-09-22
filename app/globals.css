@@ -1,0 +1,61 @@
+@import "tailwindcss";
+
+@font-face {
+    font-family: 'NunitoEB';
+    src: url('/assets/fonts/Nunito-ExtraBold.ttf');
+}
+
+@font-face {
+    font-family: 'Ruda';
+    src: url('/assets/fonts/Ruda-Regular.ttf');
+}
+
+.Ruda {
+    font-family: Ruda;
+}
+
+.NunitoEB {
+    font-family: 'NunitoEB';
+}
+
+@media only screen and (max-width: 1000px) {
+    .generate{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+    .col1{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+    }
+    .imput{
+        width: 95%;
+    }
+}
+
+@media only screen and (max-width: 905px) {
+    .smButton{
+        visibility: hidden;
+        height: 180px;
+        width: 200px;
+        background-color: #e0e5ec;
+        border-radius: 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        position: absolute;
+        right: 10px;
+        top: 80px;
+    }
+    nav{
+        width: 90%;
+        padding-inline: calc(var(--spacing) * 6);
+    }
+    .gen{
+        display: none;
+    }
+}
