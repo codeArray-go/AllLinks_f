@@ -5,6 +5,9 @@ import { useRouter } from 'next/navigation';
 import useAuthStore from '@/store/authStore';
 import axios from 'axios';
 import { Eye, EyeOff } from "lucide-react";
+import UseLoader from '@/store/loaderStore';
+import { ToastContainer, toast } from "react-toastify";
+import useThemeStore from '@/store/themeStore';
 
 const Page = () => {
 
@@ -17,6 +20,9 @@ const Page = () => {
     const [submited, setSubmited] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+    const { isDarkMode } = useThemeStore();
+
+    const { showLoader, hideLoader } = UseLoader();
 
     // 5 minute countdown for otp
     useEffect(() => {
@@ -38,6 +44,7 @@ const Page = () => {
 
     // Request OTP.
     const handleEmailVerification = async () => {
+        showLoader();
         try {
             if (email) {
                 setIsSubmiting(true);
@@ -49,6 +56,7 @@ const Page = () => {
             }
         } catch (err) {
             alert("Failed to send otp");
+            hideLoader();
         } finally {
             setTime(300);
             setIsSubmiting(false);
@@ -57,6 +65,7 @@ const Page = () => {
 
     // Verify OTP
     const handleOtpVerification = async () => {
+        showLoader();
         try {
             const cleanOtp = otp.trim();
             const res = await axios.post(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/verify/verify-otp`, { email, otp: cleanOtp });
@@ -67,6 +76,7 @@ const Page = () => {
             setSubmited(true);
             setIsVerifying(false);
         } catch (err) {
+            hideLoader();
             return alert(err.response?.data?.message || "Verification failed");
         }
     }
@@ -80,6 +90,7 @@ const Page = () => {
     // Handle Signup of user
     const handleSignup = async (e) => {
         e.preventDefault();
+        showLoader();
 
         const formData = new FormData(e.target);
 
@@ -117,9 +128,11 @@ const Page = () => {
         }
     }, [isAuthenticated, router]);
 
+
     // Handle Login of User
     const handleLogin = async (e) => {
         e.preventDefault();
+        showLoader();
 
         const formData = new FormData(e.target);
         const payload = {
@@ -138,8 +151,11 @@ const Page = () => {
             const data = await res.json();
             if (res.ok) {
                 useAuthStore.getState().login(data.user.username);
+                showLoader();
+                toast.success("User Loged In Successfully");
             } else {
-                alert(data.message || "Login Failed");
+                hideLoader();
+                toast.error(data.message || "Login Failed");
             }
         } catch (err) {
             console.error("Login krne me error aa rha hai bhai: ", err);
@@ -147,7 +163,8 @@ const Page = () => {
     }
 
     return (
-        <div className="text-gray-700 mx-auto px-4 sm:px-6 lg:px-8">
+        <div className={`${isDarkMode ? 'text-white' : 'text-gray-700'} mx-auto px-4 sm:px-6 lg:px-8`}>
+            <ToastContainer />
             {isLogin ? (
                 <>
                     <h1 className="font-bold text-center text-2xl sm:text-3xl md:text-4xl py-8 NunitoEB">
@@ -156,7 +173,7 @@ const Page = () => {
 
                     <form className="w-full max-w-md mx-auto" onSubmit={handleLogin}>
                         <div className="mb-5">
-                            <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900">
+                            <label htmlFor="email" className={`block mb-2 text-sm font-medium ${isDarkMode ? 'text-white' : 'text-zinc-900'} `}>
                                 Your email
                             </label>
                             <input
@@ -171,7 +188,7 @@ const Page = () => {
                         <div className="mb-6 relative">
                             <label
                                 htmlFor="password"
-                                className="block mb-2 text-sm font-medium text-gray-900 dark:text-slate-900"
+                                className={`block mb-2 text-sm font-medium ${isDarkMode ? 'text-white' : 'text-zinc-900'} `}
                             >
                                 Password
                             </label>
@@ -216,7 +233,7 @@ const Page = () => {
                     <form className="w-full max-w-2xl mx-auto" onSubmit={handleSignup}>
                         <div className="grid gap-6 mb-6 md:grid-cols-2">
                             <div>
-                                <label htmlFor="username" className="block mb-2 text-sm font-medium text-gray-900">
+                                <label htmlFor="username" className={`block mb-2 text-sm font-medium ${isDarkMode ? 'text-white' : 'text-zinc-900'}`}>
                                     Username
                                 </label>
                                 <input
@@ -229,7 +246,7 @@ const Page = () => {
                                 />
                             </div>
                             <div>
-                                <label htmlFor="age" className="block mb-2 text-sm font-medium text-gray-900">
+                                <label htmlFor="age" className={`block mb-2 text-sm font-medium ${isDarkMode ? 'text-white' : 'text-zinc-900'}`}>
                                     Current age
                                 </label>
                                 <input
@@ -245,7 +262,7 @@ const Page = () => {
 
                         {/* Email Verification */}
                         <div className="mb-6">
-                            <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900">
+                            <label htmlFor="email" className={`block mb-2 text-sm font-medium ${isDarkMode ? 'text-white' : 'text-zinc-900'}`}>
                                 Email address
                             </label>
                             <div className="flex flex-col sm:flex-row sm:items-center sm:gap-4 gap-3">
@@ -320,7 +337,7 @@ const Page = () => {
                         <div className="mb-6 relative">
                             <label
                                 htmlFor="password"
-                                className="block mb-2 text-sm font-medium text-gray-900 dark:text-slate-900"
+                                className={`block mb-2 text-sm font-medium ${isDarkMode ? 'text-white' : 'text-zinc-900'}`}
                             >
                                 Password
                             </label>
@@ -345,7 +362,7 @@ const Page = () => {
                         <div className="mb-6 relative">
                             <label
                                 htmlFor="confirm_password"
-                                className="block mb-2 text-sm font-medium text-gray-900 dark:text-slate-900"
+                                className={`block mb-2 text-sm font-medium ${isDarkMode ? 'text-white' : 'text-zinc-900'}`}
                             >
                                 Confirm Password
                             </label>
@@ -381,8 +398,9 @@ const Page = () => {
                         </span>
                     </p>
                 </>
-            )}
-        </div>
+            )
+            }
+        </div >
     );
 
 }
