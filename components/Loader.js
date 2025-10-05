@@ -10,7 +10,7 @@ const Loader = () => {
 
     useEffect(() => {
         hideLoader();
-    }, [pathname]);
+    }, [pathname, hideLoader]);
 
     return loading ? (
         <div className='fixed top-0 right-0 h-screen w-screen bg-[rgba(255,255,255,0.6)] flex items-center justify-center z-50'>
