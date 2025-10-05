@@ -22,7 +22,7 @@ const Footer = () => {
           <ul className="flex gap-10 text-[16px] text-[#99a1af] Ruda ">
             <Link href="/login"><li className="hover:text-white">Login</li></Link>
             <Link href={`/${login ? "login" : "generate"}`} ><li className="hover:text-white">Generate</li></Link>
-            <Link href="https://my-portfolio-seven-delta-21.vercel.app/" target="_blank"><li className="hover:text-white">Developer</li></Link>
+            <Link href="https://new-port-folio-green.vercel.app/" target="_blank"><li className="hover:text-white">Developer</li></Link>
           </ul>
         </div>
 
@@ -40,7 +40,7 @@ const Footer = () => {
           </Link>
 
           <Link href="https://www.instagram.com/_bhayiya_ji/" target="_blank" className="hover:scale-110 ease-in-out duration-300">
-            <Image src="/logos/Instagram.svg" width={35} height={35} className="invert" alt="GithubLogo" />
+            <Image src="/logos/Instagram.svg" width={35} height={35} className="invert" alt="InstagramLogo" />
           </Link>
         </div>
 
@@ -51,3 +51,4 @@ const Footer = () => {
 }
 
 export default Footer;
+
