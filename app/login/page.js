@@ -60,6 +60,7 @@ const Page = () => {
         } finally {
             setTime(300);
             setIsSubmiting(false);
+            hideLoader();
         }
     }
 
@@ -406,3 +407,4 @@ const Page = () => {
 }
 
 export default Page
+
