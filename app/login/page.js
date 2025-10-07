@@ -66,7 +66,6 @@ const Page = () => {
 
     // Verify OTP
     const handleOtpVerification = async () => {
-        showLoader();
         try {
             const cleanOtp = otp.trim();
             const res = await axios.post(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/verify/verify-otp`, { email, otp: cleanOtp });
@@ -407,4 +406,5 @@ const Page = () => {
 }
 
 export default Page
+
 
