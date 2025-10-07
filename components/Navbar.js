@@ -89,9 +89,9 @@ const Navbar = () => {
             onClick={() => setIsMenuOpen(!isMenuOpen)}
             className="flex flex-col justify-between w-6 h-5 focus:outline-none"
           >
-            <span className={`block h-0.5 w-full bg-white transition-transform ${isMenuOpen ? "rotate-45 translate-y-2" : ""}`} />
-            <span className={`block h-0.5 w-full bg-white transition-opacity ${isMenuOpen ? "opacity-0" : "opacity-100"}`} />
-            <span className={`block h-0.5 w-full bg-white transition-transform ${isMenuOpen ? "-rotate-45 -translate-y-2" : ""}`} />
+            <span className={`block h-0.5 w-full ${isDarkMode ? 'bg-white' : 'bg-black'} transition-transform ${isMenuOpen ? "rotate-45 translate-y-2" : ""}`} />
+            <span className={`block h-0.5 w-full ${isDarkMode ? 'bg-white' : 'bg-black'} transition-opacity ${isMenuOpen ? "opacity-0" : "opacity-100"}`} />
+            <span className={`block h-0.5 w-full ${isDarkMode ? 'bg-white' : 'bg-black'} transition-transform ${isMenuOpen ? "-rotate-45 -translate-y-2" : ""}`} />
           </button>
 
           {isMenuOpen && (
