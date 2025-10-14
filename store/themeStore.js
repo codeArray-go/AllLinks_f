@@ -9,5 +9,4 @@ const useThemeStore = create((set) => ({
             return { isDarkMode: newTheme };
         }),
 }));
-
 export default useThemeStore;
